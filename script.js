@@ -25,10 +25,13 @@ document.querySelectorAll('.nav-link').forEach(link => {
 
 // Show notification function
 function showNotification(message, type = 'info') {
+    // Sanitize message by creating a text node (prevents XSS)
+    const sanitizedMessage = document.createTextNode(message);
+    
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
-    notification.textContent = message;
+    notification.appendChild(sanitizedMessage);
     
     // Add to body
     document.body.appendChild(notification);
