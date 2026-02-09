@@ -73,7 +73,7 @@ function setupEventListeners() {
         if (toggleButton) {
             const roomId = parseInt(toggleButton.dataset.roomId);
             const deviceId = parseInt(toggleButton.dataset.deviceId);
-            if (roomId && deviceId) {
+            if (!isNaN(roomId) && !isNaN(deviceId)) {
                 toggleDevice(roomId, deviceId);
             }
         }
@@ -133,7 +133,6 @@ function renderRooms(rooms) {
 function createRoomElement(room) {
     const roomDiv = document.createElement('div');
     roomDiv.className = 'room';
-    roomDiv.dataset.roomId = room.id;
     
     // Calculate room status
     const devicesOn = room.devices.filter(d => d.state === 'on').length;
@@ -352,7 +351,7 @@ function startAutoRefresh() {
     
     // Get refresh interval from settings
     const intervalSeconds = parseInt(localStorage.getItem('refreshInterval') || '30');
-    const intervalMs = intervalSeconds * 1000;
+    const intervalMs = isNaN(intervalSeconds) || intervalSeconds < 5 ? 30000 : intervalSeconds * 1000;
     
     // Set new interval
     refreshInterval = setInterval(() => {
