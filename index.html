@@ -24,7 +24,7 @@
             <div class="container">
                 <h1 class="hero-title">Welcome to Web Interface</h1>
                 <p class="hero-subtitle">A simple and elegant web interface solution</p>
-                <button class="btn btn-primary" onclick="showMessage()">Get Started</button>
+                <button class="btn btn-primary" id="getStartedBtn">Get Started</button>
             </div>
         </section>
 
@@ -70,7 +70,7 @@
         <section id="contact" class="contact">
             <div class="container">
                 <h2 class="section-title">Contact</h2>
-                <form class="contact-form" onsubmit="handleSubmit(event)">
+                <form class="contact-form" id="contactForm">
                     <div class="form-group">
                         <input type="text" id="name" placeholder="Your Name" required>
                     </div>

@@ -23,28 +23,67 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
-// Show message function for Get Started button
-function showMessage() {
-    alert('Welcome! This is a demonstration web interface. Explore the features below!');
+// Show notification function
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => notification.classList.add('show'), 10);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 4000);
 }
 
+// Get Started button handler
+document.addEventListener('DOMContentLoaded', function() {
+    const getStartedBtn = document.getElementById('getStartedBtn');
+    if (getStartedBtn) {
+        getStartedBtn.addEventListener('click', function() {
+            showNotification('Welcome! This is a demonstration web interface. Explore the features below!', 'success');
+            // Scroll to features section
+            const featuresSection = document.querySelector('#features');
+            if (featuresSection) {
+                setTimeout(() => {
+                    featuresSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 500);
+            }
+        });
+    }
+});
+
 // Handle form submission
-function handleSubmit(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    
-    // Simulate form submission
-    console.log('Form submitted:', { name, email, message });
-    
-    // Show success message
-    alert(`Thank you, ${name}! Your message has been received. We'll get back to you at ${email} soon.`);
-    
-    // Reset form
-    event.target.reset();
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            
+            // Simulate form submission (no logging of sensitive data)
+            // In production, this would send data to a server
+            
+            // Show success message
+            showNotification(`Thank you, ${name}! Your message has been received. We'll get back to you soon.`, 'success');
+            
+            // Reset form
+            event.target.reset();
+        });
+    }
+});
 
 // Update active navigation link on scroll
 window.addEventListener('scroll', function() {
