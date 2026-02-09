@@ -50,10 +50,32 @@ function setupEventListeners() {
     // Settings button
     document.getElementById('settings-btn').addEventListener('click', openSettings);
     
+    // Settings modal buttons
+    document.getElementById('close-settings-btn').addEventListener('click', closeSettings);
+    document.getElementById('cancel-settings-btn').addEventListener('click', closeSettings);
+    document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
+    
+    // Retry button
+    document.getElementById('retry-btn').addEventListener('click', () => {
+        location.reload();
+    });
+    
     // Close modal on background click
     document.getElementById('settings-modal').addEventListener('click', (e) => {
         if (e.target.id === 'settings-modal') {
             closeSettings();
+        }
+    });
+    
+    // Event delegation for device toggle buttons
+    document.addEventListener('click', (e) => {
+        const toggleButton = e.target.closest('.toggle-switch');
+        if (toggleButton) {
+            const roomId = parseInt(toggleButton.dataset.roomId);
+            const deviceId = parseInt(toggleButton.dataset.deviceId);
+            if (roomId && deviceId) {
+                toggleDevice(roomId, deviceId);
+            }
         }
     });
 }
@@ -155,7 +177,7 @@ function createDeviceHTML(roomId, device) {
                 <span>${isOn ? 'On' : 'Off'}</span>
             </div>
             <div class="device-controls">
-                <button class="toggle-switch" onclick="toggleDevice(${roomId}, ${device.id})">
+                <button class="toggle-switch" data-room-id="${roomId}" data-device-id="${device.id}">
                     <span>${isOn ? 'Turn Off' : 'Turn On'}</span>
                     <div class="switch"></div>
                 </button>
@@ -298,15 +320,15 @@ function closeSettings() {
  */
 function saveSettings() {
     const apiURL = document.getElementById('api-url').value.trim();
-    const refreshInterval = document.getElementById('refresh-interval').value;
+    const refreshIntervalValue = document.getElementById('refresh-interval').value;
     
     // Validate inputs
     if (apiURL) {
         api.setAPIURL(apiURL);
     }
     
-    if (refreshInterval) {
-        localStorage.setItem('refreshInterval', refreshInterval);
+    if (refreshIntervalValue) {
+        localStorage.setItem('refreshInterval', refreshIntervalValue);
         // Restart auto-refresh with new interval
         startAutoRefresh();
     }
