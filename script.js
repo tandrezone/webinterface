@@ -73,13 +73,20 @@ document.addEventListener('DOMContentLoaded', function() {
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
             
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
+            // Get and sanitize user input (trim whitespace)
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            // Validate inputs
+            if (!name || !email) {
+                showNotification('Please fill in all required fields.', 'error');
+                return;
+            }
             
             // Simulate form submission (no logging of sensitive data)
             // In production, this would send data to a server
             
-            // Show success message
+            // Show success message (showNotification uses createTextNode for XSS protection)
             showNotification(`Thank you, ${name}! Your message has been received. We'll get back to you soon.`, 'success');
             
             // Reset form
