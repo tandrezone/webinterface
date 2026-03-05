@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Control Interface</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 House Control</h1>
+            <div id="connection-status" class="status-indicator">
+                <span class="status-dot"></span>
+                <span id="status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <main>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading rooms and devices...</p>
+            </div>
+
+            <div id="error-message" class="error-message hidden">
+                <p id="error-text"></p>
+                <button id="retry-btn">Retry</button>
+            </div>
+
+            <div id="rooms-container" class="rooms-container hidden">
+                <!-- Rooms will be dynamically loaded here -->
+            </div>
+        </main>
+
+        <footer>
+            <div class="settings">
+                <button id="settings-btn" class="icon-btn" title="Settings">⚙️</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button id="close-settings-btn" class="close-btn">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="api-url">API URL:</label>
+                    <input type="text" id="api-url" placeholder="http://localhost:3000/api">
+                </div>
+                <div class="form-group">
+                    <label for="refresh-interval">Refresh Interval (seconds):</label>
+                    <input type="number" id="refresh-interval" min="5" max="300" value="30">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-settings-btn" class="btn btn-secondary">Cancel</button>
+                <button id="save-settings-btn" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="api-client.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
